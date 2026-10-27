@@ -6,6 +6,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17
@@ -26,3 +28,13 @@ jobs:
         with:
           name: app-debug
           path: app/build/outputs/apk/debug/app-debug.apk
+      # Lampirkan APK ke Release v1.0.0-001_alpha dari DALAM Actions
+      # (upload asset langsung dari VM dulu 401, jadi jangan pernah dari VM).
+      # gh CLI memakai GITHUB_TOKEN bawaan Actions; --clobber menimpa
+      # asset lama dengan nama yang sama bila release sudah ada.
+      - name: Attach APK to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp app/build/outputs/apk/debug/app-debug.apk TapTapTycoon-v1.0.0-001_alpha.apk
+          gh release upload v1.0.0-001_alpha TapTapTycoon-v1.0.0-001_alpha.apk --clobber
