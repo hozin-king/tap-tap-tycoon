@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Tap Tycoon</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="game-container">
+        
+        <div class="page active" id="page-ringkasan">
+            <div class="fixed-top-dashboard">
+                <h1>Cyber Tap</h1>
+                <div class="subtitle">Neon Clicker Edition</div>
+                
+                <div class="score-container">
+                    <div class="score-label">Total Energi</div>
+                    <div class="score-box" id="score-display">0</div>
+                </div>
+                
+                <div class="tap-area" id="tap-area">
+                    <button id="tap-btn">TAP</button>
+                </div>
+
+                <div class="stats-panel">
+                    <div class="stat-item">
+                        Per Tap
+                        <span id="tap-power-display">1</span>
+                    </div>
+                    <div class="stat-item">
+                        Per Detik (CPS)
+                        <span id="auto-speed-display">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scrollable-upgrade-list">
+                <div class="upgrade-card" id="upg-click">
+                    <div class="upgrade-info">
+                        <div class="upgrade-name">⚡ Plasma Glove</div>
+                        <div class="upgrade-desc" id="upg-click-desc">+1 Energi per tap</div>
+                    </div>
+                    <div class="upgrade-cost">
+                        <div class="cost-val" id="upg-click-cost">25</div>
+                        <div class="upgrade-count" id="upg-click-count">Lv 1</div>
+                    </div>
+                </div>
+                <div class="upgrade-card" id="upg-auto">
+                    <div class="upgrade-info">
+                        <div class="upgrade-name">🤖 Neon Drone</div>
+                        <div class="upgrade-desc" id="upg-auto-desc">+1 Energi per detik</div>
+                    </div>
+                    <div class="upgrade-cost">
+                        <div class="cost-val" id="upg-auto-cost">50</div>
+                        <div class="upgrade-count" id="upg-auto-count">Lv 0</div>
+                    </div>
+                </div>
+                <div class="upgrade-card" id="upg-quantum">
+                    <div class="upgrade-info">
+                        <div class="upgrade-name">🌌 Quantum Core</div>
+                        <div class="upgrade-desc" id="upg-quantum-desc">+10 Energi per detik</div>
+                    </div>
+                    <div class="upgrade-cost">
+                        <div class="cost-val" id="upg-quantum-cost">500</div>
+                        <div class="upgrade-count" id="upg-quantum-count">Lv 0</div>
+                    </div>
+                </div>
+                <div class="upgrade-card" id="upg-antimatter">
+                    <div class="upgrade-info">
+                        <div class="upgrade-name">🌋 Anti-Matter Gen</div>
+                        <div class="upgrade-desc" id="upg-antimatter-desc">+75 Energi per detik</div>
+                    </div>
+                    <div class="upgrade-cost">
+                        <div class="cost-val" id="upg-antimatter-cost">5.00K</div>
+                        <div class="upgrade-count" id="upg-antimatter-count">Lv 0</div>
+                    </div>
+                </div>
+                <div class="upgrade-card" id="upg-dyson">
+                    <div class="upgrade-info">
+                        <div class="upgrade-name">🛰️ Dyson Sphere Seg</div>
+                        <div class="upgrade-desc" id="upg-dyson-desc">+500 Energi per detik</div>
+                    </div>
+                    <div class="upgrade-cost">
+                        <div class="cost-val" id="upg-dyson-cost">75.0K</div>
+                        <div class="upgrade-count" id="upg-dyson-count">Lv 0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="page-modul">
+            <div class="fixed-top-dashboard">
+                <h1>Modul</h1>
+                <div class="subtitle">Sistem Komponen Tambahan</div>
+                
+                <div class="ios-list-title">🔋 Sisa Daya & Kapasitas Inti</div>
+                <div class="battery-panel" style="flex-direction: column; align-items: stretch; gap: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div class="battery-info">
+                            <span class="battery-label">Sisa Waktu Operasi:</span>
+                            <span class="battery-timer" id="auto-upgrade-timer">05:00:00</span>
+                        </div>
+                        <button class="btn-refuel disabled" id="btn-refuel-action">Isi Daya (Cost: 0)</button>
+                    </div>
+                    <button id="btn-upgrade-battery" style="background: rgba(0,242,254,0.08); border: 1px solid rgba(0,242,254,0.3); border-radius: 8px; color: #00f2fe; padding: 6px; font-size: 10px; font-weight: bold; cursor: pointer; outline: none;">
+                        🔋 Upgrade Kapasitas Inti (+1 Jam) | Cost: 1.00K
+                    </button>
+                </div>
+            </div>
+
+            <div class="scrollable-upgrade-list">
+                <div class="ios-list-title">🕹️ Modul Bantu Klik</div>
+                <div class="upgrade-card" id="upg-autoclick">
+                    <div class="upgrade-info">
+                        <div class="upgrade-name">⚙️ Macro Auto-Clicker</div>
+                        <div class="upgrade-desc" id="upg-autoclick-desc">Ngetap otomatis 1x / 5 dtk (Aktif Offline)</div>
+                    </div>
+                    <div class="upgrade-cost">
+                        <div class="cost-val" id="upg-autoclick-cost">1.50K</div>
+                        <div class="upgrade-count" id="upg-autoclick-count">Lv 0</div>
+                    </div>
+                </div>
+
+                <div class="ios-list-title">⚙️ Target Otomatisasi Upgrade (Maks 1)</div>
+                <div class="ios-list-group">
+                    <div class="ios-list-item clickable-target" data-target-item="glove" style="cursor: pointer;">
+                        <span class="item-left">⚡ Auto Upgrade Plasma Glove</span>
+                        <span class="target-status" id="status-glove" style="font-weight:bold;">Mati</span>
+                    </div>
+                    <div class="ios-list-item clickable-target" data-target-item="drone" style="cursor: pointer;">
+                        <span class="item-left">🤖 Auto Upgrade Neon Drone</span>
+                        <span class="target-status" id="status-drone" style="font-weight:bold;">Mati</span>
+                    </div>
+                    <div class="ios-list-item clickable-target" data-target-item="quantum" style="cursor: pointer;">
+                        <span class="item-left">🌌 Auto Upgrade Quantum Core</span>
+                        <span class="target-status" id="status-quantum" style="font-weight:bold;">Mati</span>
+                    </div>
+                    <div class="ios-list-item clickable-target" data-target-item="antimatter" style="cursor: pointer;">
+                        <span class="item-left">🌋 Auto Upgrade Anti-Matter Gen</span>
+                        <span class="target-status" id="status-antimatter" style="font-weight:bold;">Mati</span>
+                    </div>
+                    <div class="ios-list-item clickable-target" data-target-item="dyson" style="cursor: pointer;">
+                        <span class="item-left">🛰️ Auto Upgrade Dyson Sphere</span>
+                        <span class="target-status" id="status-dyson" style="font-weight:bold;">Mati</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="page-leaderboard">
+            <div class="fixed-top-dashboard">
+                <h1>🏆 Papan Peringkat</h1>
+                <div class="subtitle">Top 10 Global Player Cluster</div>
+                <button id="btn-refresh-leaderboard" style="width:100%; background:rgba(0,242,254,0.1); border:1px solid #00f2fe; border-radius:10px; color:#00f2fe; padding:8px; font-size:11px; font-weight:bold; cursor:pointer; margin-top:5px;">
+                    🔄 Refresh Ranking Global
+                </button>
+            </div>
+            <div class="scrollable-upgrade-list">
+                <div class="ios-list-title">👑 TOP RANKING ENERGI SELAMANYA</div>
+                <div class="ios-list-group" id="leaderboard-html-container">
+                    <div style="padding:20px; font-size:11px; color:#52527a; text-align:center;">Menghubungkan ke database...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="page-repositori">
+            <div class="fixed-top-dashboard">
+                <h1>Repositori</h1>
+                <div class="subtitle">Pusat Audit Log & Keamanan</div>
+                <div class="security-banner">
+                    <span class="shield-icon">🛡️</span>
+                    <div class="shield-text">
+                        <strong>Sistem Enkripsi Kernel Aktif</strong>
+                        <p>Memantau aktivitas manipulasi memori lokal secara real-time.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="scrollable-upgrade-list">
+                <div class="ios-list-title">📜 Log Aktivitas Enkripsi Lokal</div>
+                <div class="log-container" id="log-terminal-display"></div>
+            </div>
+        </div>
+
+        <div class="page" id="page-setelan">
+            <div class="fixed-top-dashboard">
+                <h1>Setelan</h1>
+                <div class="subtitle">Konfigurasi Game</div>
+            </div>
+            <div class="scrollable-upgrade-list">
+                <div class="ios-menu-list">
+                    <div class="ios-menu-group">
+                        <button class="btn-ios-danger" id="reset-trigger">Reset Progress Game</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="page-profil">
+            <div class="fixed-top-dashboard">
+                <h1>Profil Jaringan</h1>
+                <div class="subtitle">Identitas & Interaksi Global</div>
+                
+                <div id="cloud-fixed-header-zone" style="background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(0,242,254,0.1); border-radius: 12px; padding: 8px; margin-bottom: 12px;">
+                    <div id="section-logged-out">
+                        <button class="online-only-btn" id="btn-trigger-auth-modal" style="width: 100%; background: linear-gradient(135deg, #00f2fe, #4facfe); color: #000; border: none; padding: 10px; border-radius: 8px; font-weight: bold; font-size: 11px; cursor: pointer;">
+                            🔒 Masuk / Daftar Akun Jaringan
+                        </button>
+                    </div>
+                    <div id="section-logged-in" style="display: none;">
+                        <div id="logged-email-text" style="font-size:10px; color:#34c759; margin-bottom:8px; font-family:monospace; text-align:center;">Terhubung: -</div>
+                        <div style="display:flex; gap:6px; margin-bottom:6px;">
+                            <button class="online-only-btn" id="btn-manual-save-cloud" style="flex:1; background:#34c759; color:#fff; border:none; padding:8px; font-size:10px; font-weight:bold; border-radius:8px; cursor:pointer;">💾 Save Cloud</button>
+                            <button class="online-only-btn" id="btn-manual-load-cloud" style="flex:1; background:#00f2fe; color:#000; border:none; padding:8px; font-size:10px; font-weight:bold; border-radius:8px; cursor:pointer;">📥 Load Cloud</button>
+                            <button class="online-only-btn" id="btn-open-chat" style="flex:1; background:#ff9f43; color:#fff; border:none; padding:8px; font-size:10px; font-weight:bold; border-radius:8px; cursor:pointer;">💬 Chat</button>
+                        </div>
+                        <button id="btn-logout-cloud" style="width:100%; background:rgba(255, 71, 87, 0.1); border:1px solid #ff4757; color:#ff4757; padding:8px; font-size:10px; font-weight:bold; border-radius:8px; cursor:pointer;">Keluar Akun</button>
+                    </div>
+                </div>
+                
+                <div class="profile-header" id="my-profile-card">
+                    <div class="profile-avatar-container">
+                        <div class="profile-avatar">👤</div>
+                        <span class="likes-badge" id="my-likes-count">❤️ 0</span>
+                    </div>
+                    
+                    <div class="name-edit-box">
+                        <input type="text" id="player-name-input" value="Hozinking" maxlength="14" autocomplete="off">
+                        <span class="edit-icon">✏️</span>
+                    </div>
+
+                    <p style="font-size:12px; color:#00f2fe; font-family: monospace; font-weight: bold; margin-top:5px; cursor: pointer;" id="account-id-display">
+                        ID: Loading...
+                    </p>
+                </div>
+
+                <div class="search-player-bar">
+                    <input type="text" id="search-player-input" placeholder="Cari Angka ID Akun Pemain...">
+                    <button id="btn-search-player">Cari</button>
+                </div>
+            </div>
+
+            <div class="scrollable-upgrade-list" id="profile-scroll-zone">
+                <div class="ios-list-title">🎵 Audio Deck (Murni Offline JavaScript)</div>
+                <div class="ios-list-group">
+                    <div class="ios-list-item">
+                        <div class="audio-track-info">
+                            <span style="font-weight:700; color:#fff; display:block; font-size:12px;">📻 Subnet Mirage</span>
+                            <span style="font-size:9px; color:#6a6a9f;">Hozinking Electro Remix</span>
+                        </div>
+                        <button class="btn-audio-toggle" id="btn-music-toggle">Mulai Musik</button>
+                    </div>
+                </div>
+
+                <div class="ios-list-title">🤝 Daftar Teman (<span id="friend-count-txt">0</span>)</div>
+                <div class="social-friends-list" id="friends-container-list"></div>
+
+                <div class="ios-list-title">👁️ Riwayat Pengunjung Profil (Klik Nama/ID Untuk View)</div>
+                <div class="visitor-history-box" id="visitor-container-list"></div>
+
+                <div class="ios-list-title">Statistik Kernel Energi</div>
+                <div class="ios-list-group">
+                    <div class="ios-list-item">
+                        <span class="item-left">👑 Total Selamanya</span>
+                        <span class="item-right" id="stat-energy-alltime">0</span>
+                    </div>
+                    <div class="ios-list-item">
+                        <span class="item-left">🔘 Total Klik</span>
+                        <span class="item-right" id="stat-total-clicks">0</span>
+                    </div>
+                    <div class="ios-list-item">
+                        <span class="item-left">💸 Energi Dihabiskan</span>
+                        <span class="item-right" id="stat-energy-spent">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="overlay" id="auth-input-modal">
+        <div class="ios-alert-box" style="width: 290px; padding: 20px; background:#070712; border: 1px solid rgba(0,242,254,0.3); border-radius: 16px;">
+            <h2 style="font-size:16px; color:#fff; margin-bottom:15px; text-transform:uppercase; letter-spacing:1px;">🔐 Autentikasi Jaringan</h2>
+            
+            <div id="auth-form-credentials-layer">
+                <input type="email" id="auth-email" class="modal-input-field" placeholder="Masukkan Email Jaringan..." style="width:100%; margin-bottom:10px;">
+                <input type="password" id="auth-password" class="modal-input-field" placeholder="Masukkan Password..." style="width:100%; margin-bottom:15px;">
+                <div style="display:flex; gap:10px;">
+                    <button class="online-only-btn" id="btn-login-cloud" style="flex:1; background:rgba(0, 242, 254, 0.1); border:1px solid #00f2fe; color:#00f2fe; padding:10px; border-radius:10px; font-weight:bold; cursor:pointer;">Masuk</button>
+                    <button class="online-only-btn" id="btn-register-cloud" style="flex:1; background:#00f2fe; color:#000; border:none; padding:10px; border-radius:10px; font-weight:bold; cursor:pointer;">Daftar (OTP)</button>
+                </div>
+            </div>
+
+            <div id="auth-form-otp-layer" style="display: none;">
+                <p style="font-size:11px; color:#ffaa00; margin-bottom:12px; line-height:1.4;">Kode OTP dikirim ke email lu. Periksa folder inbox/spam lalu masukkan kode 6 digit tersebut:</p>
+                <input type="text" id="auth-otp-code" class="modal-input-field" placeholder="Ketik Kode OTP..." style="width:100%; margin-bottom:15px; text-align:center; font-family:monospace; font-size:16px; letter-spacing:3px;" maxLength="6">
+                <button class="online-only-btn" id="btn-verify-otp-cloud" style="width:100%; background:#34c759; color:#fff; border:none; padding:12px; border-radius:10px; font-weight:bold; cursor:pointer;">Verifikasi Kode OTP</button>
+            </div>
+
+            <button id="btn-close-auth-modal" style="margin-top:15px; width:100%; background:transparent; border:none; color:#6a6a9f; font-size:11px; font-weight:bold; text-transform:uppercase; cursor:pointer; text-decoration:underline;">Batalkan</button>
+        </div>
+    </div>
+
+    <div class="overlay" id="chat-overlay">
+        <div class="ios-alert-box" style="width: 320px; height: 420px; display: flex; flex-direction: column; background: #070712; border: 1px solid rgba(0,242,254,0.3); border-radius:16px;">
+            <div style="padding: 12px; background: #0c0c1a; border-bottom: 1px solid rgba(0,242,254,0.15); display:flex; justify-content:space-between; align-items:center;">
+                <span style="color:#00f2fe; font-size:12px; font-weight:bold; letter-spacing: 1px;">💬 JARINGAN GLOBAL</span>
+                <button id="btn-close-chat" style="background:#ff4757; color:#fff; border:none; border-radius:6px; padding:4px 10px; font-weight:bold; font-size:10px; cursor:pointer;">X</button>
+            </div>
+            <div id="chat-box-messages" style="flex:1; overflow-y:auto; padding:10px; display:flex; flex-direction:column; gap:8px; text-align:left;"></div>
+            <div style="padding:10px; border-top:1px solid rgba(255,255,255,0.05); display:flex; gap:6px;">
+                <input type="text" id="input-chat-message" class="modal-input-field" placeholder="Ketik pesan..." style="flex:1; margin:0;">
+                <button id="btn-send-chat" style="background:#00f2fe; color:#000; font-weight:bold; border:none; padding:0 12px; border-radius:8px; cursor:pointer; font-size: 11px;">Kirim</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="social-inspect-modal">
+        <div class="inspect-profile-card">
+            <div class="inspect-avatar-circle">👤</div>
+            <h2 id="inspect-name">Nama Player</h2>
+            <p class="inspect-id" id="inspect-id" style="cursor: pointer; font-family: monospace; letter-spacing: 1px;" title="Klik untuk salin">00000000</p>
+            
+            <div class="inspect-stats-row">
+                <div class="ins-stat">
+                    <span id="inspect-cps">0</span>
+                    <p>Energi</p>
+                </div>
+                <div class="ins-stat">
+                    <span id="inspect-likes">0</span>
+                    <p>Like</p>
+                </div>
+            </div>
+
+            <div class="inspect-action-buttons">
+                <button class="btn-ins-action btn-add-friend" id="btn-add-friend-action">Tambah Teman</button>
+                <button class="btn-ins-action btn-like-player" id="btn-action-like">💖 Like</button>
+                <button class="btn-ins-action btn-report-player" id="btn-action-report">⚠️ Report</button>
+            </div>
+            
+            <button class="btn-close-inspect" id="btn-close-inspect">Kembali</button>
+        </div>
+    </div>
+
+    <div class="overlay" id="ios-alert-dialog">
+        <div class="ios-alert-box">
+            <div class="ios-alert-content">
+                <h3 class="ios-alert-title">Reset Game?</h3>
+                <p class="ios-alert-message">Semua progress data enkripsi lu bakal kehapus permanen dari memori.</p>
+            </div>
+            <div class="ios-alert-buttons">
+                <button class="ios-btn-action" id="alert-cancel">Batalkan</button>
+                <button class="ios-btn-action ios-btn-danger" id="alert-confirm">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="floating-navbar">
+        <div class="nav-item active" data-target="page-ringkasan">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-text">Ringkasan</span>
+        </div>
+        <div class="nav-item" data-target="page-modul">
+            <span class="nav-icon">🧩</span>
+            <span class="nav-text">Modul</span>
+        </div>
+        <div class="nav-item" data-target="page-leaderboard">
+            <span class="nav-icon">🏆</span>
+            <span class="nav-text">Peringkat</span>
+        </div>
+        <div class="nav-item" data-target="page-repositori">
+            <span class="nav-icon">🛡️</span>
+            <span class="nav-text">Log</span>
+        </div>
+        <div class="nav-item" data-target="page-setelan">
+            <span class="nav-icon">⚙️</span>
+            <span class="nav-text">Setelan</span>
+        </div>
+        <div class="nav-item" data-target="page-profil">
+            <span class="nav-icon">👤</span>
+            <span class="nav-text">Profil</span>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
