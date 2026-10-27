@@ -13,8 +13,9 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      # Android SDK sudah terpasang di runner ubuntu-latest (ANDROID_HOME),
+      # jadi langkah setup-android dihapus: versi v3 gagal karena paket
+      # 'tools' sudah tidak ada di sdkmanager (Failed to find package 'tools').
       - name: Build debug APK
         uses: gradle/gradle-build-action@v3
         with:
